@@ -1,0 +1,75 @@
+* {
+  background: lightslategray;
+}
+
+.Home {
+  background: none;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin: 1px 0;
+}
+h2 {
+  font-size: 2rem;
+}
+
+.pnf {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.pnf h1 {
+  font-size: 12rem;
+}
+
+.pnf h2 {
+  font-size: 3rem;
+}
+
+.Navbar {
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+  background: none;
+  overflow: hidden;
+  text-decoration: none;
+  float: left;
+  width: 100%;
+}
+
+.Navbar a {
+  background: none;
+  padding: 2vh 5vw;
+  margin: 2vh 0vw 1vh 6vh;
+  text-decoration: none;
+  border-radius: 10px;
+  border: 3px;
+  outline: solid;
+  color: black;
+}
+
+.Navbar a:hover {
+  background: lightblue;
+}
+
+.Hero {
+  padding: 20vh 3vh;
+  margin: 0vh 1vw;
+}
+
+.Contact {
+  padding: 15vh 3vw;
+}
+
+.Contact a {
+  font-size: 30px;
+  text-decoration: none;
+}
+
+.Contact span {
+  font-size: 30px;
+}
