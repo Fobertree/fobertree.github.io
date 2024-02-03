@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/fobertree.github.io/static/css/main.723907f1.css",
+    "main.js": "/fobertree.github.io/static/js/main.bbb715f7.js",
+    "index.html": "/fobertree.github.io/index.html",
+    "main.723907f1.css.map": "/fobertree.github.io/static/css/main.723907f1.css.map",
+    "main.bbb715f7.js.map": "/fobertree.github.io/static/js/main.bbb715f7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.723907f1.css",
+    "static/js/main.bbb715f7.js"
+  ]
+}
