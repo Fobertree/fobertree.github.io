@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/fobertree.github.io/static/css/main.723907f1.css",
-    "main.js": "/fobertree.github.io/static/js/main.bbb715f7.js",
-    "index.html": "/fobertree.github.io/index.html",
-    "main.723907f1.css.map": "/fobertree.github.io/static/css/main.723907f1.css.map",
-    "main.bbb715f7.js.map": "/fobertree.github.io/static/js/main.bbb715f7.js.map"
+    "main.css": "/static/css/main.723907f1.css",
+    "main.js": "/static/js/main.db55a31a.js",
+    "index.html": "/index.html",
+    "main.723907f1.css.map": "/static/css/main.723907f1.css.map",
+    "main.db55a31a.js.map": "/static/js/main.db55a31a.js.map"
   },
   "entrypoints": [
     "static/css/main.723907f1.css",
-    "static/js/main.bbb715f7.js"
+    "static/js/main.db55a31a.js"
   ]
 }
