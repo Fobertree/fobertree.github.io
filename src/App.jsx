@@ -7,6 +7,7 @@ import PNF from "./Pages/PNF";
 import Navbar from "./Components/Navbar";
 import Contact from "./Pages/Contact";
 // App router
+// https://github.com/gitname/react-gh-pages
 //import Layout from "./Pages/Layout";
 /*
 import About from "./Pages/AboutUs";
