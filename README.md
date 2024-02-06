@@ -1,3 +1,3 @@
 # Personal Website
 
-[https://fobertree.github.io/][Website]
+[https://fobertree.github.io/](https://fobertree.github.io/)
