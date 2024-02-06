@@ -73,3 +73,7 @@ h2 {
 .Contact span {
   font-size: 30px;
 }
+
+.MuiCard-root {
+  background: white !important;
+}

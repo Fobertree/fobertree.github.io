@@ -8,6 +8,7 @@ import Navbar from "./Components/Navbar";
 import Contact from "./Pages/Contact";
 // App router
 // https://github.com/gitname/react-gh-pages
+// https://stackoverflow.com/questions/71984401/react-router-not-working-with-github-pages
 //import Layout from "./Pages/Layout";
 /*
 import About from "./Pages/AboutUs";
