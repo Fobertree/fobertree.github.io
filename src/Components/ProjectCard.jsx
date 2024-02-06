@@ -6,8 +6,14 @@ import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 //import { ThemeProvider } from "@emotion/react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import flow from "./images/flowfield1.png";
 
 // https://abhik-b.medium.com/cards-full-screen-expand-and-close-react-and-framer-motion-af0f5cf83f45
+
+const images = require.context("./images", true);
+const imageList = images.keys().map((image) => images(image));
+
+console.log(imageList);
 
 const theme = createTheme({
   palette: {
@@ -15,12 +21,18 @@ const theme = createTheme({
   },
 });
 
-function ProjectCard({ title, text, imgSrc }) {
+function ProjectCard({ title, text, img }) {
+  console.log("img");
   return (
     <ThemeProvider theme={theme}>
-      <Card sx={{ maxWidth: 345, background: "white", textAlign: "initial" }}>
+      <Card sx={{ maxWidth: 345, textAlign: "initial", marginRight: "2vw" }}>
         <CardActionArea>
-          <CardMedia component="img" height="140" image={imgSrc} alt="image" />
+          <CardMedia
+            component="img"
+            height="140"
+            image={img || flow}
+            alt="image"
+          />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {title}

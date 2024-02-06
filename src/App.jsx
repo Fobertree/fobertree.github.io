@@ -31,7 +31,7 @@ https://mui.com/material-ui/react-card/
 
 function App() {
   return (
-    <div>
+    <div style={{ backgroundColor: "lightslategray" }}>
       <Navbar />
       <Routes>
         <Route path={"/"} element={<Home />}></Route>

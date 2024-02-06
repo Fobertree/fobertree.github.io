@@ -1,9 +1,6 @@
-* {
-  background: lightslategray;
-}
-
 .Home {
   background: none;
+  padding: 0 5vw;
 }
 
 h1 {
@@ -57,8 +54,8 @@ h2 {
 }
 
 .Hero {
-  padding: 20vh 3vh;
-  margin: 0vh 1vw;
+  padding: 20vh 0 5vh;
+  margin: 0vh 0;
 }
 
 .Contact {
@@ -72,8 +69,4 @@ h2 {
 
 .Contact span {
   font-size: 30px;
-}
-
-.MuiCard-root {
-  background: white !important;
 }
