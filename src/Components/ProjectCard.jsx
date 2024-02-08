@@ -10,9 +10,6 @@ import flow from "./images/flowfield1.png";
 
 // https://abhik-b.medium.com/cards-full-screen-expand-and-close-react-and-framer-motion-af0f5cf83f45
 
-const images = require.context("./images", true);
-const imageList = images.keys().map((image) => images(image));
-
 console.log(imageList);
 
 const theme = createTheme({
