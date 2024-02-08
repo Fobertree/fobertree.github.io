@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/react-gh-pages/static/css/main.d48849d3.css",
-    "main.js": "/react-gh-pages/static/js/main.becf2ddf.js",
-    "static/media/flowfield1.png": "/react-gh-pages/static/media/flowfield1.b345b91aa0a9e4ead0e8.png",
-    "index.html": "/react-gh-pages/index.html",
-    "main.d48849d3.css.map": "/react-gh-pages/static/css/main.d48849d3.css.map",
-    "main.becf2ddf.js.map": "/react-gh-pages/static/js/main.becf2ddf.js.map"
+    "main.css": "/static/css/main.d48849d3.css",
+    "main.js": "/static/js/main.24e47c92.js",
+    "static/media/flowfield1.png": "/static/media/flowfield1.b345b91aa0a9e4ead0e8.png",
+    "index.html": "/index.html",
+    "main.d48849d3.css.map": "/static/css/main.d48849d3.css.map",
+    "main.24e47c92.js.map": "/static/js/main.24e47c92.js.map"
   },
   "entrypoints": [
     "static/css/main.d48849d3.css",
-    "static/js/main.becf2ddf.js"
+    "static/js/main.24e47c92.js"
   ]
 }
