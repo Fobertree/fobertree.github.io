@@ -1,14 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.d48849d3.css",
-    "main.js": "/static/js/main.24e47c92.js",
+    "main.css": "/static/css/main.b24c1446.css",
+    "main.js": "/static/js/main.d431d49f.js",
+    "static/js/788.615ddc70.chunk.js": "/static/js/788.615ddc70.chunk.js",
     "static/media/flowfield1.png": "/static/media/flowfield1.b345b91aa0a9e4ead0e8.png",
     "index.html": "/index.html",
-    "main.d48849d3.css.map": "/static/css/main.d48849d3.css.map",
-    "main.24e47c92.js.map": "/static/js/main.24e47c92.js.map"
+    "main.b24c1446.css.map": "/static/css/main.b24c1446.css.map",
+    "main.d431d49f.js.map": "/static/js/main.d431d49f.js.map"
   },
   "entrypoints": [
-    "static/css/main.d48849d3.css",
-    "static/js/main.24e47c92.js"
+    "static/css/main.b24c1446.css",
+    "static/js/main.d431d49f.js"
   ]
 }
