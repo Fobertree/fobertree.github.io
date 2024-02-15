@@ -41,7 +41,7 @@ h2 {
 .Navbar a {
   background: none;
   padding: 2vh 5vw;
-  margin: 2vh 0vw 1vh 6vh;
+  margin: 2vh 0vw 1vh 3vw;
   text-decoration: none;
   border-radius: 10px;
   border: 3px;
@@ -69,4 +69,28 @@ h2 {
 
 .Contact span {
   font-size: 30px;
+}
+
+.ProjectSection {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+a:visited {
+  color: transparent;
+}
+
+a {
+  color: black;
+}
+
+.Contact {
+  padding: 20vh 0 5vh;
+}
+
+.ProjectSectionSvgIcons {
+  margin: 0 5vw 5vh 1vw;
+  transform: scale(1.8);
+  float: 5px;
 }

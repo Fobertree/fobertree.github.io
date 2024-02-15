@@ -9,5 +9,5 @@ const Hero = () => {
     </div>
   );
 };
-
+// https://stackoverflow.com/questions/26793247/how-to-overlay-a-div-over-a-canvas-css
 export default Hero;

@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import PNF from "./Pages/PNF";
 import Navbar from "./Components/Navbar";
-import Contact from "./Pages/Contact";
 // App router
 // https://github.com/gitname/react-gh-pages
 // https://stackoverflow.com/questions/71984401/react-router-not-working-with-github-pages
@@ -35,7 +34,6 @@ function App() {
       <Navbar />
       <Routes>
         <Route path={"/"} element={<Home />}></Route>
-        <Route path={"/Contact"} element={<Contact />}></Route>
         <Route path={"*"} element={<PNF />}></Route>
       </Routes>
       Footer

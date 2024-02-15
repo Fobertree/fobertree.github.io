@@ -9,6 +9,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import flow from "./images/flowfield1.png";
 
 // https://abhik-b.medium.com/cards-full-screen-expand-and-close-react-and-framer-motion-af0f5cf83f45
+// Scroll into view: https://stackblitz.com/edit/react-8m4oaw?file=index.js
 
 const theme = createTheme({
   palette: {
@@ -16,15 +17,25 @@ const theme = createTheme({
   },
 });
 
-function ProjectCard({ title, text, img }) {
-  console.log("img");
+function ProjectCard({ title, text, img, url }) {
+  console.log(url);
   return (
     <ThemeProvider theme={theme}>
-      <Card sx={{ maxWidth: 345, textAlign: "initial", marginRight: "2vw" }}>
-        <CardActionArea>
+      <Card
+        sx={{
+          maxWidth: 345,
+          textAlign: "initial",
+          marginTop: "2vh",
+          marginRight: "2vw",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
+        <CardActionArea onClick={() => window.open(url, "_blank")}>
           <CardMedia
             component="img"
-            height="140"
+            height="200"
             image={img || flow}
             alt="image"
           />
@@ -32,14 +43,22 @@ function ProjectCard({ title, text, img }) {
             <Typography gutterBottom variant="h5" component="div">
               {title}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {text};
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              style={{ wordWrap: "break-word" }}
+            >
+              {text}
             </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
-            Share
+          <Button
+            size="small"
+            color="primary"
+            onClick={() => window.open(url, "_blank")}
+          >
+            Learn More
           </Button>
         </CardActions>
       </Card>
