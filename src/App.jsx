@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useRef } from "react";
 import "./App.css";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -29,8 +29,16 @@ https://mui.com/material-ui/react-card/
 */
 
 function App() {
+  const divRef = useRef();
+
+  const scrollToElement = () => {
+    const { current } = divRef;
+    if (current !== null) {
+      current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   return (
-    <div style={{ backgroundColor: "lightslategray" }}>
+    <div style={{ backgroundColor: "rgba(6, 12, 42, 0.89)" }}>
       <Navbar />
       <Routes>
         <Route path={"/"} element={<Home />}></Route>

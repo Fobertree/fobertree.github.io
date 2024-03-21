@@ -12,3 +12,5 @@ root.render(
     <App />
   </BrowserRouter>
 );
+
+// https://stackoverflow.com/questions/63544289/how-to-highlight-navbar-links-on-page-scroll-in-react

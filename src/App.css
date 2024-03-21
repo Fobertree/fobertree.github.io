@@ -15,7 +15,8 @@ h2 {
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: 10px;
+  padding-top: 45vh;
+  padding-bottom: 55vh;
   width: 100%;
 }
 
@@ -27,34 +28,48 @@ h2 {
   font-size: 3rem;
 }
 
+.Navbar-container {
+  background: rgba(3, 12, 54, 0.89);
+  padding: 2vh 2vw 1vw 5vw;
+  display: flex;
+  justify-content: center;
+}
+
 .Navbar {
   display: flex;
   flex: 1;
-  justify-content: flex-start;
-  background: none;
+  justify-content: space-between;
+  background: rgba(3, 12, 54, 0.89);
+  color: rgba(138, 149, 195, 0.89);
   overflow: hidden;
   text-decoration: none;
-  float: left;
+  float: right;
   width: 100%;
+  z-index: 10;
+  align-items: center;
+  padding: 1vh 2vw 1vw 0;
+  /*padding-top: 1vh;
+  padding-bottom: 2vh;
+  right: 0;*/
 }
 
-.Navbar a {
+.Navbar div a {
   background: none;
   padding: 2vh 5vw;
-  margin: 2vh 0vw 1vh 3vw;
+  margin: 2vh 0vw 1vh 1vw;
   text-decoration: none;
-  border-radius: 10px;
+  border-radius: 3px;
   border: 3px;
   outline: solid;
-  color: black;
+  color: rgba(138, 149, 195, 0.89);
 }
 
 .Navbar a:hover {
-  background: lightblue;
+  background: rgba(85, 111, 228, 0.89);
 }
 
 .Hero {
-  padding: 20vh 0 5vh;
+  padding: 5vh 0 5vh;
   margin: 0vh 0;
 }
 
@@ -77,9 +92,11 @@ h2 {
   flex-wrap: wrap;
 }
 
+/*
 a:visited {
   color: transparent;
 }
+*/
 
 a {
   color: black;
