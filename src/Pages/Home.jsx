@@ -7,6 +7,7 @@ import ScrollSpy from "react-ui-scrollspy";
 //import flow from "../Components/images/flowfield1.png";
 
 const Home = () => {
+  console.log("GETTING HOMT");
   return (
     <div className="Home">
       <ScrollSpy>
@@ -32,7 +33,7 @@ const Home = () => {
               title="Wall Street Bets Sentiment Analysis"
               text="Currently a work in progress. Scraping training data from Wall Street Bets to create and train a BERT model, that will make investment decisions on a paper-traded Wall Street Bets portfolio."
               img={import("../Components/images/cmlogo.jpg").default}
-              url="https://https://github.com/Fobertree/WSB-Sentiment-Analysis"
+              url="https://github.com/Fobertree/WSB-Sentiment-Analysis"
             />
           </div>
         </section>
