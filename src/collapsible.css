@@ -1,0 +1,115 @@
+/*
+ CSS for the main interaction
+*/
+.accordion > input[type="checkbox"] {
+    position: absolute;
+    left: -100vw;
+  }
+  
+  .accordion .content {
+    overflow-y: hidden;
+    height: 0;
+    background: whitesmoke;
+    transition: height 0.3s ease;
+  }
+  
+  .accordion > input[type="checkbox"]:checked ~ .content {
+    height: auto;
+    overflow: visible;
+  }
+  
+  .accordion label {
+    display: block;
+  }
+  
+  /*
+   Styling
+  */
+  body {
+    font: 16px/1.5em "Overpass", "Open Sans", Helvetica, sans-serif;
+    color: #333;
+    font-weight: 300;
+  }
+  
+  .accordion {
+    margin-bottom: 1em;
+  }
+  
+  .accordion > input[type="checkbox"]:checked ~ .content {
+    padding: 15px;
+    border: 1px solid #aebdff;;
+    border-top: 0;
+    width:80vw;
+    max-width: 1300px;
+  }
+  
+  .accordion .handle {
+    margin: 0;
+    font-size: 1.125em;
+    line-height: 1.2em;
+  }
+  
+  .accordion label {
+    color: #333;
+    cursor: pointer;
+    font-weight: normal;
+    padding: 15px;
+    background: #aebdff;
+    width:80vw;
+    max-width: 1300px;
+  }
+  
+  .accordion label:hover,
+  .accordion label:focus {
+    background: lightgray;
+  }
+  
+  .accordion .handle label:before {
+    font-family: 'fontawesome';
+    content: "\f054";
+    display: inline-block;
+    margin-right: 10px;
+    font-size: .58em;
+    line-height: 1.556em;
+    vertical-align: middle;
+  }
+  
+  .accordion > input[type="checkbox"]:checked ~ .handle label:before {
+    content: "\f078";
+  }
+  
+  
+  /*
+   Demo purposes only
+  */
+  .accordion *,
+  .accordion *:before,
+  .accordion *:after {
+    box-sizing: border-box;
+  }
+  
+  .accordion body {
+    padding: 40px;
+  }
+  
+  .accordion a {
+    color: #06c;
+  }
+  
+  .accordion p {
+    margin: 0 0 1em;
+  }
+  
+  .accordion h1 {
+    margin: 0 0 1.5em;
+    font-weight: 600;
+    font-size: 1.5em;
+  }
+  
+  .accordion {
+    max-width: 65em;
+  }
+  
+  .accordion p:last-child {
+    margin-bottom: 0;
+  }

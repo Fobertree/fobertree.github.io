@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import "./App.css";
 import App from "./App.jsx";
+import "./collapsible.css"
 //import { basename } from "path";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

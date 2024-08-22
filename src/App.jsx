@@ -5,7 +5,6 @@ import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import PNF from "./Pages/PNF";
 import Navbar from "./Components/Navbar";
-import Algory from "./Pages/Algory";
 // App router
 // https://github.com/gitname/react-gh-pages
 // https://stackoverflow.com/questions/71984401/react-router-not-working-with-github-pages
@@ -26,14 +25,13 @@ function App() {
       <div style={{ backgroundColor: "rgba(6, 12, 42, 0.89)" }}>
         <Navbar />
         <Routes>
-          <Route exact path={"/algorydashboard/"} element={<Algory />} />
           <Route exact path={"/"} element={<Home />} />
           <Route path={"*"} element={<PNF />} />
         </Routes>
         <footer
-          style={{ color: "white", textAlign: "center", padding: "20px" }}
+          style={{ color: "#aebdff", textAlign: "center", padding: "20px" }}
         >
-          Footer
+          <a href="mailto:aliu266@emory.edu" target="_blank" rel="noreferrer" style={{textDecoration:"none", color: "#aebdff"}}>aliu266@emory.edu</a> | 224-358-1456
         </footer>
       </div>
     </Router>

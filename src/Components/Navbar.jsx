@@ -9,11 +9,11 @@ const Navbar = () => {
       <div className="Navbar">
         <h1>Alexander Liu</h1>
         <div>
-          <a href="/" id="Home">
+          {/* <a href="/" id="Home">
             {" "}
             Home
           </a>
-          <a id="Projects"> Projects </a>
+          <a id="Projects"> Projects </a> */}
         </div>
       </div>
     </div>
