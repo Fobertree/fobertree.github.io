@@ -1,3 +1,10 @@
+body {
+  font: 16px/1.5em "Overpass", "Open Sans", Helvetica, sans-serif;
+  color: #333;
+  font-weight: 300;
+  background-color: rgba(6, 12, 42, 0.89);
+}
+
 .Home {
   background: none;
   padding: 0 5vw;
@@ -90,6 +97,7 @@ h2 {
 .ProjectSection {
   width: 100%;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
 }
 
@@ -111,40 +119,4 @@ a {
   margin: 0 5vw 5vh 1vw;
   transform: scale(1.8);
   float: 5px;
-}
-
-/* ApexCharts*/
-
-body {
-  background-color: white;
-  color: #777;
-  font-family: "Titillium Web", Arial, Helvetica, sans-serif;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-strong {
-  font-weight: 600;
-}
-
-p {
-  margin-bottom: 8px;
-}
-
-.ContactSection {
-  width: 300px;
-  padding-bottom: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.ProjectSectionSvgIcons {
-  margin: 0 10px;
-  display: inline-block;
-  vertical-align: middle;
 }

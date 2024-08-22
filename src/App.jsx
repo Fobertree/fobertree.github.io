@@ -20,9 +20,10 @@ function App() {
       current.scrollIntoView({ behavior: "smooth" });
     }
   };
+  // need to get rid of opacity
   return (
     <Router>
-      <div style={{ backgroundColor: "rgba(6, 12, 42, 0.89)" }}>
+      <div style={{ /*backgroundColor: "rgba(6, 12, 42, 0.89)" */}}>
         <Navbar />
         <Routes>
           <Route exact path={"/"} element={<Home />} />

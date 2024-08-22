@@ -33,6 +33,12 @@ const ProjectCollapse = () => {
                 label_id={"backtester"}
             />
             <ProjectCollapseCard
+                title={"Casing Machine"}
+                description={["Implemented Full-Stack casing interview preparation under a team of Emory and Georgia Tech students. Access website ", <a href = 'https://www.casing-machine.com/home'>here</a>, "."]}
+                tech_stack={"JS, HTML/CSS, Pug, Firebase, GCP"}
+                label_id={"casing_machine"}
+            />
+            <ProjectCollapseCard
                 title={"Elon Musk Twitter Webscraper"}
                 description={"Implemented webscraper in Selenium that scrapes the content of Elon Musk's tweets (including timestamps) with the intention of potentially creating a sentiment-analysis dataset. Created to bypass API limits on only fetching up to 100 most recent tweets from a user."}
                 tech_stack={"Python, Selenium"}
