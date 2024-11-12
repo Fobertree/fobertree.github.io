@@ -108,3 +108,13 @@
   .accordion p:last-child {
     margin-bottom: 0;
   }
+  /*
+    height: 0;
+    overflow: hidden;
+    background: red;
+   -moz-animation: slide 1s ease 3.5s forwards;
+   -webkit-animation: slide 1s ease 3.5s forwards;
+   -o-animation: slide 1s ease 3.5s forwards;
+   -ms-animation: slide 1s ease 3.5s forwards;
+    animation: slide 1s ease 3.5s forwards;
+  */

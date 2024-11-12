@@ -1,6 +1,6 @@
 import React from "react";
 
-function ProjectCollapseCard ({title, description, tech_stack, label_id, url=null})
+function ProjectCollapseCard ({title, description, tech_stack, label_id, url=null, url_text="Learn More"})
 {
     if (url != null)
     {
@@ -13,7 +13,7 @@ function ProjectCollapseCard ({title, description, tech_stack, label_id, url=nul
                     <div class="content">
                         <p><strong>Description:</strong> {description} </p>
                         <p><strong>Technologies Used:</strong> {tech_stack}</p>
-                        <p className="accordionURL" src = {url}> Learn More </p>
+                        <p className="accordionURL"> <a target="_blank" rel="noopener noreferrer" href= {url}>{url_text} </a></p>
                     </div>
             </section>
         )
