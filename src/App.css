@@ -18,6 +18,10 @@ h2 {
   font-size: 2rem;
 }
 
+li {
+  margin: 5px 10px;
+}
+
 .pnf {
   display: flex;
   align-items: center;
@@ -55,7 +59,7 @@ h2 {
   z-index: 10;
   align-items: center;
   padding: 1vh 2vw 1vw 0;
-  min-height:80px;
+  min-height: 80px;
   /*padding-top: 1vh;
   padding-bottom: 2vh;
   right: 0;*/
