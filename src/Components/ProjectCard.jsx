@@ -1,15 +1,13 @@
-import * as React from "react";
+"use client";
+
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
-//import { ThemeProvider } from "@emotion/react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import flow from "./images/flowfield1.png";
 
-// https://abhik-b.medium.com/cards-full-screen-expand-and-close-react-and-framer-motion-af0f5cf83f45
-// Scroll into view: https://stackblitz.com/edit/react-8m4oaw?file=index.js
+import flow from "./images/flowfield1.png";
 
 const theme = createTheme({
   palette: {
@@ -18,7 +16,12 @@ const theme = createTheme({
 });
 
 function ProjectCard({ title, text, img, url }) {
-  console.log(url);
+  console.warn("Project Card");
+  const handleClick = () => {
+    if (!url) return;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Card
@@ -32,32 +35,27 @@ function ProjectCard({ title, text, img, url }) {
           justifyContent: "space-between",
         }}
       >
-        <CardActionArea onClick={() => window.open(url, "_blank")}>
+        <CardActionArea onClick={handleClick}>
           <CardMedia
             component="img"
             height="200"
             image={img || flow}
-            alt="image"
+            alt={title}
           />
+
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {title}
             </Typography>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              style={{ wordWrap: "break-word" }}
-            >
+
+            <Typography variant="body2" color="text.secondary">
               {text}
             </Typography>
           </CardContent>
         </CardActionArea>
+
         <CardActions>
-          <Button
-            size="small"
-            color="primary"
-            onClick={() => window.open(url, "_blank")}
-          >
+          <Button size="small" color="primary" onClick={handleClick}>
             Learn More
           </Button>
         </CardActions>
@@ -67,14 +65,3 @@ function ProjectCard({ title, text, img, url }) {
 }
 
 export default ProjectCard;
-
-/*export default function ProjectCard() {
-  <div>
-    <Cards
-      title="Test"
-      text="test \n\nContent"
-      imgSrc="../../public/images/flowfield1.png"
-    />
-  </div>;
-}
-*/
