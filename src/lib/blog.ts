@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import matter from "gray-matter";
+import { parseFrontmatter } from "./frontmatter";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
@@ -76,7 +76,7 @@ function parseMetadata(data: Record<string, unknown>): BlogMetadata {
 function readPostFile(slug: string) {
   const postPath = path.join(BLOGS_DIR, slug, "post.md");
   if (!fs.existsSync(postPath)) return null;
-  const { data, content } = matter(fs.readFileSync(postPath, "utf8"));
+  const { data, content } = parseFrontmatter(fs.readFileSync(postPath, "utf8"));
   return { metadata: parseMetadata(data), content };
 }
 
@@ -102,7 +102,9 @@ async function loadLatexDirectory(postSlug: string, relativeDir: string) {
     collectLatexFiles(dirPath).map(async (filePath) => {
       const raw = fs.readFileSync(filePath, "utf8");
       const isMd = path.extname(filePath).toLowerCase() === ".md";
-      const parsed = isMd ? matter(raw) : { data: {} as Record<string, unknown>, content: raw };
+      const parsed = isMd
+        ? parseFrontmatter(raw)
+        : { data: {} as Record<string, unknown>, content: raw };
       const base = path.basename(filePath, path.extname(filePath));
       return {
         title: parsed.data.title ? String(parsed.data.title) : base,
@@ -163,7 +165,9 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   if (!post) return null;
 
   const notesPath = path.join(BLOGS_DIR, slug, "notes.md");
-  const notes = fs.existsSync(notesPath) ? matter(fs.readFileSync(notesPath, "utf8")) : null;
+  const notes = fs.existsSync(notesPath)
+    ? parseFrontmatter(fs.readFileSync(notesPath, "utf8"))
+    : null;
 
   return {
     slug,
