@@ -1,35 +1,46 @@
-import React from "react";
+import styles from "../collapsible.module.css";
 
-function ProjectCollapseCard ({title, description, tech_stack, label_id, url=null, url_text="Learn More"})
-{
-    if (url != null)
-    {
-        return (
-            <section class="accordion">
-                    <input type="checkbox" name="collapse" id= {label_id}/>
-                    <h2 class="handle">
-                        <label for= {label_id}> {title} </label>
-                    </h2>
-                    <div class="content">
-                        <p><strong>Description:</strong> {description} </p>
-                        <p><strong>Technologies Used:</strong> {tech_stack}</p>
-                        <p className="accordionURL"> <a target="_blank" rel="noopener noreferrer" href= {url}>{url_text} </a></p>
-                    </div>
-            </section>
-        )
-    }
-    return (
-        <section class="accordion">
-                <input type="checkbox" name="collapse" id= {label_id}/>
-                <h2 class="handle">
-                    <label for= {label_id}> {title} </label>
-                </h2>
-                <div class="content">
-                    <p><strong>Description:</strong> {description} </p>
-                    <p><strong>Technologies Used:</strong> {tech_stack}</p>
-                </div>
-        </section>
-    )
+export default function ProjectCollapseCard({
+  title,
+  description,
+  bullets,
+  tech_stack,
+  label_id,
+  url,
+  url_text = "Learn More",
+}) {
+  return (
+    <section className={styles.accordion}>
+      <input type="checkbox" name="collapse" id={label_id} />
+      <h2 className={styles.handle}>
+        <label htmlFor={label_id}>{title}</label>
+      </h2>
+      <div className={styles.content}>
+        <div className={styles.contentInner}>
+          <div>
+            <strong>Description:</strong>{" "}
+            {bullets ? (
+              <ul>
+                {bullets.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            ) : (
+              description
+            )}
+          </div>
+          <p>
+            <strong>Technologies Used:</strong> {tech_stack}
+          </p>
+          {url ? (
+            <p>
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                {url_text}
+              </a>
+            </p>
+          ) : null}
+        </div>
+      </div>
+    </section>
+  );
 }
-
-export default ProjectCollapseCard;

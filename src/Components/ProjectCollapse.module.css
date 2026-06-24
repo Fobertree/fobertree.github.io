@@ -1,0 +1,12 @@
+.sectionHeading {
+  color: var(--color-text-muted);
+  font-size: 2rem;
+}
+
+.section li {
+  margin: 5px 10px;
+}
+
+.section a {
+  color: black;
+}

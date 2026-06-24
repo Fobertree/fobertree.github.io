@@ -1,0 +1,4 @@
+.siteShell {
+  padding: 0 var(--page-padding-x) var(--page-padding-bottom);
+  min-height: 100vh;
+}

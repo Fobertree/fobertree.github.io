@@ -1,0 +1,11 @@
+.contactSection {
+  padding: var(--space-home-contact-block) 0 var(--space-home-contact-bottom);
+  margin: 0;
+}
+
+.contactIcon {
+  margin: 0 var(--margin-contact-icon-inline) var(--margin-contact-icon-bottom)
+    var(--margin-contact-icon-left);
+  transform: scale(var(--scale-contact-icon));
+  color: var(--color-text-accent);
+}

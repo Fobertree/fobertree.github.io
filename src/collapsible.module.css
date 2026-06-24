@@ -1,0 +1,97 @@
+.accordion > input[type="checkbox"] {
+  position: absolute;
+  left: -100vw;
+}
+
+.accordion {
+  margin-bottom: 1em;
+  max-width: 65em;
+}
+
+.accordion *,
+.accordion *::before,
+.accordion *::after {
+  box-sizing: border-box;
+}
+
+.accordion .handle {
+  margin: 0;
+  font-size: 1.125em;
+  line-height: 1.2em;
+}
+
+.accordion label {
+  display: block;
+  color: var(--color-text-card-header);
+  cursor: pointer;
+  font-weight: normal;
+  padding: 15px;
+  background: var(--color-blog-header);
+  width: 100%;
+  transition: background var(--transition-accordion);
+}
+
+.accordion label:hover,
+.accordion label:focus {
+  background: var(--color-blog-header-hover);
+}
+
+.accordion .handle label::before {
+  font-family: "fontawesome";
+  content: "\f054";
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 0.58em;
+  line-height: 1.556em;
+  vertical-align: middle;
+  transition: transform var(--transition-accordion);
+}
+
+.accordion > input[type="checkbox"]:checked ~ .handle label::before {
+  transform: rotate(90deg);
+}
+
+.accordion .content {
+  display: grid;
+  grid-template-rows: 0fr;
+  width: 100%;
+  background: var(--color-blog-surface);
+  border: 1px solid transparent;
+  border-top: 0;
+  transition:
+    grid-template-rows var(--transition-accordion),
+    border-color var(--transition-accordion);
+}
+
+.accordion > input[type="checkbox"]:checked ~ .content {
+  grid-template-rows: 1fr;
+  border-color: var(--color-blog-border);
+}
+
+.contentInner {
+  overflow: hidden;
+  padding: 0 15px;
+  transition: padding var(--transition-accordion);
+}
+
+.accordion > input[type="checkbox"]:checked ~ .content .contentInner {
+  padding: 15px;
+}
+
+.accordion a {
+  color: #06c;
+}
+
+.accordion p {
+  margin: 0 0 1em;
+}
+
+.accordion p:last-child {
+  margin-bottom: 0;
+}
+
+.accordion h1 {
+  margin: 0 0 1.5em;
+  font-weight: 600;
+  font-size: 1.5em;
+}

@@ -1,0 +1,5 @@
+.hero {
+  padding: var(--space-home-hero-block) 0;
+  margin: 0;
+  color: var(--color-text-accent);
+}
