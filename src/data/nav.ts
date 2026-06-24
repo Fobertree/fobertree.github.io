@@ -5,6 +5,10 @@ export const NAV_LINKS = [
     label: "Blog",
     active: (path: string) => path.startsWith("/blog"),
   },
-  { href: "/#Projects", label: "Projects" },
-  { href: "/#Contact", label: "Contact" },
+  {
+    href: "/projects",
+    label: "Projects",
+    active: (path: string) => path === "/projects",
+  },
+  // { href: "/#Contact", label: "Contact" },
 ] as const;
