@@ -1,0 +1,96 @@
+:root {
+  --color-bg-primary: rgba(6, 12, 42, 0.89);
+  --color-bg-nav: rgb(3, 12, 54);
+  --color-bg-nav-overlay: rgba(3, 12, 54, 0.98);
+  --color-text-accent: rgba(174, 189, 255, 0.89);
+  --color-text-nav: rgba(138, 149, 195, 0.89);
+  --color-text-muted: lightgray;
+  --color-text-on-dark: white;
+  --color-text-heading: #222;
+  --color-text-body: #2c3454;
+  --color-text-secondary: #4a5578;
+  --color-text-tertiary: #3b4a7a;
+  --color-text-card-header: #333;
+  --color-interactive: rgba(85, 111, 228, 0.89);
+  --color-interactive-border: rgba(138, 149, 195, 0.6);
+  --color-link: #3b5bdb;
+
+  --color-blog-header: #aebdff;
+  --color-blog-header-hover: #c8d4ff;
+  --color-blog-surface: #e8eeff;
+  --color-blog-surface-deep: #dce6ff;
+  --color-blog-border: #aebdff;
+  --color-blog-accent-soft: rgba(174, 189, 255, 0.35);
+  --color-blog-accent-muted: rgba(174, 189, 255, 0.25);
+  --color-blog-accent-faint: rgba(174, 189, 255, 0.2);
+  --color-blog-accent-border: rgba(174, 189, 255, 0.5);
+  --color-tag-bg: rgba(85, 111, 228, 0.2);
+  --color-tag-text: rgba(3, 12, 54, 0.89);
+
+  --page-padding-x: 5vw;
+  --page-padding-bottom: 8vh;
+  --content-width: 80vw;
+  --content-max-width: 1300px;
+  --content-narrow-max-width: 640px;
+
+  --space-xs: 0.35rem;
+  --space-sm: 0.5rem;
+  --space-md: 0.65rem;
+  --space-lg: 0.75rem;
+  --space-xl: 1rem;
+  --space-2xl: 1.25rem;
+  --space-3xl: 1.5rem;
+  --space-4xl: 2rem;
+  --space-post-top: 2.5rem;
+  --space-blog-main-offset: 1rem;
+  --space-home-main-offset: 0.5rem;
+  --space-home-hero-block: 5vh;
+  --space-home-contact-block: 0;
+  --space-home-contact-bottom: 0;
+
+  --margin-contact-icon-inline: var(--page-padding-x);
+  --margin-contact-icon-bottom: 5vh;
+  --margin-contact-icon-left: 1vw;
+  --scale-contact-icon: 1.8;
+
+  --font-size-title: 2.5rem;
+  --font-size-article-title: 2rem;
+  --font-size-article-title-mobile: 1.75rem;
+  --font-size-subtitle: 1.125rem;
+  --font-size-card-title: 1.125em;
+  --font-size-meta: 0.9rem;
+  --font-size-article-meta: 0.95rem;
+  --font-size-tag: 0.8rem;
+  --font-size-back-link: 0.95rem;
+  --font-size-latex-title: 1.25rem;
+
+  --padding-back-link-y: 0.5rem;
+  --padding-back-link-right: 1rem;
+  --padding-back-link-left: 0.65rem;
+
+  --padding-nav-link-y: 0.9rem;
+  --padding-nav-link-x: 2rem;
+  --padding-nav-mobile-link-y: 1.15rem;
+  --padding-nav-mobile-link-x: 1.5rem;
+  --padding-nav-mobile-menu-inline: var(--page-padding-x);
+  --padding-nav-hamburger-y: 0.75rem;
+  --padding-nav-hamburger-x: 1rem;
+
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-accordion: 0.35s ease;
+
+  --line-height-tight: 1.2;
+  --line-height-body: 1.6;
+  --line-height-latex: 1.8;
+
+  --breakpoint-mobile: 768px;
+  --nav-height: 80px;
+  --color-mobile-backdrop: rgba(0, 0, 0, 0.5);
+  --shadow-mobile-menu: 0 12px 32px rgba(0, 0, 0, 0.35);
+  --transition-mobile-menu: 0.3s ease;
+}

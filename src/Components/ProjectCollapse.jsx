@@ -6,7 +6,7 @@ const ProjectCollapse = () => {
   return (
     <>
       <div>
-        <h2 style={{ color: "lightgray", background: "white" }}>
+        <h2 style={{ color: "lightgray" }}>
           Work Experience
         </h2>
 

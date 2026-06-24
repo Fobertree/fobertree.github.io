@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import Navbar from "../src/Components/Navbar/Navbar";
+import "./theme.css";
 import "./globals.css";
+import styles from "./SiteShell.module.css";
 
 export const metadata: Metadata = {
   title: "Alexander Liu",
@@ -12,8 +15,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <div className={styles.siteShell}>
+          <Navbar />
+          {children}
+        </div>
+      </body>
     </html>
   );
 }

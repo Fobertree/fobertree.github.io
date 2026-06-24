@@ -2,13 +2,11 @@ body {
   font: 16px/1.5em "Overpass", "Open Sans", Helvetica, sans-serif;
   color: #333;
   font-weight: 300;
-  background-color: rgba(6, 12, 42, 0.89);
-  background:red !important;
+  background-color: var(--color-bg-primary);
 }
 
-.Home {
-  background: none;
-  padding: 0 5vw;
+li {
+  margin-left: 1rem;
 }
 
 .ProjectCollapse h1 {
@@ -81,49 +79,8 @@ body {
   background: rgba(85, 111, 228, 0.89);
 }
 
-.Hero {
-  padding: 5vh 0 5vh;
-  margin: 0vh 0;
-}
-
-.Contact {
-  padding: 15vh 3vw;
-}
-
-.Contact a {
-  font-size: 30px;
-  text-decoration: none;
-}
-
-.Contact span {
-  font-size: 30px;
-}
-
-.ProjectSection {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-}
-
-/*
-a:visited {
-  color: transparent;
-}
-*/
-
 .ProjectCollapse a {
   color: black;
-}
-
-.Contact {
-  padding: 20vh 0 5vh;
-}
-
-.ProjectSectionSvgIcons {
-  margin: 0 5vw 5vh 1vw;
-  transform: scale(1.8);
-  float: 5px;
 }
 
 /* index */

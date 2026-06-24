@@ -1,14 +1,32 @@
-// import Home from "../pages/Home";
+import BlogPostCard from "../../src/Components/Blog/BlogPostCard";
+import { getAllPostsMetadata } from "../../src/lib/blog";
+import styles from "../../src/Components/Blog/Blog.module.css";
 
-// export default function HomeWrapper() {
-//   return (
-//     <main>
-//       {/* <Home /> */}
-//       Hello
-//     </main>
-//   );
-// }
+export const metadata = {
+  title: "Blog | Alexander Liu",
+  description: "Notes on code, art, and side projects.",
+};
 
-export default function Page() {
-  return <div style={{ color: "red", background: "blue" }}>BLOG</div>;
+export default function BlogPage() {
+  const posts = getAllPostsMetadata();
+
+  return (
+    <main>
+      <div className={styles.blogPage}>
+        <div className={styles.blogMain}>
+          <header className={styles.header}>
+            <h1 className={styles.title}>Blog</h1>
+            <p className={styles.subtitle}>
+              Thoughts on C++, drawing, and whatever I am learning that week.
+            </p>
+          </header>
+          <section className={`${styles.postList} ${styles.contentPanel}`}>
+            {posts.map((post) => (
+              <BlogPostCard key={post.slug} post={post} />
+            ))}
+          </section>
+        </div>
+      </div>
+    </main>
+  );
 }

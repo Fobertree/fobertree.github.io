@@ -1,0 +1,23 @@
+.homeSection {
+  margin: 0;
+}
+
+.homeMain {
+  width: 100%;
+  max-width: var(--content-max-width);
+  padding-top: var(--space-home-main-offset);
+  margin: 0;
+}
+
+.projectsSection {
+  margin: 0;
+}
+
+.projectSection {
+  width: 100%;
+  max-width: var(--content-max-width);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 0;
+}

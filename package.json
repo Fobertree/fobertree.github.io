@@ -6,7 +6,16 @@
   "dependencies": {
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^9.0.0",
-    "next": "^16.2.4"
+    "gray-matter": "^4.0.3",
+    "katex": "^0.17.0",
+    "next": "^16.2.6",
+    "rehype-katex": "^7.0.1",
+    "rehype-stringify": "^10.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-math": "^6.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "unified": "^11.0.5"
   },
   "devDependencies": {
     "@types/node": "25.6.0",
@@ -25,7 +34,9 @@
     "build": "pwd && next build",
     "all": "next build && npx serve out",
     "test": "next test",
-    "eject": "next eject"
+    "eject": "next eject",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "eslintConfig": {
     "extends": [

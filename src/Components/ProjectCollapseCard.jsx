@@ -9,7 +9,12 @@ function ProjectCollapseCard({
   url = null,
   url_text = "Learn More",
 }) {
-    console.warn("rendered card");
+  const isListDescription =
+    Array.isArray(description) &&
+    description.every(
+      (item) => React.isValidElement(item) && item.type === "li"
+    );
+
   return (
     <section className={styles.accordion}>
       <input type="checkbox" name="collapse" id={label_id} />
@@ -19,21 +24,24 @@ function ProjectCollapseCard({
       </h2>
 
       <div className={styles.content}>
-        <p>
-          <strong>Description:</strong> {description}
-        </p>
+        <div className={styles.contentInner}>
+          <div>
+            <strong>Description:</strong>{" "}
+            {isListDescription ? <ul>{description}</ul> : description}
+          </div>
 
-        <p>
-          <strong>Technologies Used:</strong> {tech_stack}
-        </p>
-
-        {url && (
-          <p className={styles.accordionURL}>
-            <a href={url} target="_blank" rel="noopener noreferrer">
-              {url_text}
-            </a>
+          <p>
+            <strong>Technologies Used:</strong> {tech_stack}
           </p>
-        )}
+
+          {url && (
+            <p className={styles.accordionURL}>
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                {url_text}
+              </a>
+            </p>
+          )}
+        </div>
       </div>
     </section>
   );

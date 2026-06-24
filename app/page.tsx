@@ -1,10 +1,9 @@
-// import Home from "../src/Home";
+import Home from "../src/Home";
 
 export default function Page() {
   return (
     <main>
-      Hello
-      {/* <Home /> */}
+      <Home />
     </main>
   );
 }

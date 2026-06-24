@@ -1,23 +1,22 @@
 import Hero from "../src/Components/Hero";
 import ProjectCollapse from "../src/Components/ProjectCollapse";
-//import ProjectCard from "../Components/ProjectCard";
 import Contact from "../src/Components/Contact";
-import "../src/App.module.css";
-//import About from "../Components/About";
-//import flow from "../Components/images/flowfield1.png";
+import styles from "./Home.module.css";
 
 const Home = () => {
   return (
-    <div className="Home" >
-        <section id="Home">
+    <div className={styles.home}>
+      <section id="Home" className={styles.homeSection}>
+        <div className={styles.homeMain}>
           <Hero />
-          {/* <Contact /> */}
-        </section>
-        {/* <section id="Projects">
-          <div className="ProjectSection">
-            <ProjectCollapse/>
-          </div>
-        </section> */}
+          <Contact />
+        </div>
+      </section>
+      <section id="Projects" className={styles.projectsSection}>
+        <div className={styles.projectSection}>
+          <ProjectCollapse />
+        </div>
+      </section>
     </div>
   );
 };
