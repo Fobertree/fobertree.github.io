@@ -13,6 +13,8 @@
   font-size: var(--font-size-subtitle);
   color: var(--color-text-muted);
   margin: 0;
+  margin-top: 1rem;
+  margin-left: 0.1rem;
   max-width: var(--content-narrow-max-width);
   line-height: var(--line-height-body);
 }

@@ -16,9 +16,7 @@ export default function BlogPage() {
       <ContentPanel>
         <header className={styles.header}>
           <h1 className={styles.title}>Blog</h1>
-          <p className={styles.subtitle}>
-            Thoughts on C++, drawing, and whatever I am learning that week.
-          </p>
+          <p className={styles.subtitle}>Blog stuff.</p>
         </header>
         <section className={styles.postList}>
           {posts.map((post) => (
