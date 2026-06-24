@@ -1,0 +1,5 @@
+1:"$Sreact.fragment"
+2:I[97367,["/_next/static/chunks/0p~v6b5v2rzp..js","/_next/static/chunks/06l.z30_e-9gi.js","/_next/static/chunks/13laq~3vr557i.js"],"ViewportBoundary"]
+3:I[97367,["/_next/static/chunks/0p~v6b5v2rzp..js","/_next/static/chunks/06l.z30_e-9gi.js","/_next/static/chunks/13laq~3vr557i.js"],"MetadataBoundary"]
+4:"$Sreact.suspense"
+0:{"rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Projects | Alexander Liu"}],["$","meta","1",{"name":"description","content":"Work experience and projects."}]]}]}]}],null]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"KR2is62Xp7qG9XMtkKO_p"}
