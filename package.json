@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "serve": "npx serve@latest out",
-    "preview": "next build && npx serve@latest out"
+    "preview": "next build && npx serve@latest out",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d out"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -27,6 +29,7 @@
     "@types/node": "25.6.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "gh-pages": "^6.1.1",
     "typescript": "6.0.3"
   },
   "overrides": {
