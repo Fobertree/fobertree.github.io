@@ -1,0 +1,12 @@
+.contentPanel {
+  width: 100%;
+  max-width: var(--content-max-width);
+}
+
+.offsetHome {
+  padding-top: var(--space-home-main-offset);
+}
+
+.offsetBlog {
+  padding-top: var(--space-blog-main-offset);
+}

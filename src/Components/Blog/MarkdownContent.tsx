@@ -1,15 +1,17 @@
+import { cx } from "../../lib/cx";
 import styles from "./Blog.module.css";
-
-interface MarkdownContentProps {
-  html: string;
-  className?: string;
-}
 
 export default function MarkdownContent({
   html,
   className,
-}: MarkdownContentProps) {
-  const classes = [styles.markdown, className].filter(Boolean).join(" ");
-
-  return <div className={classes} dangerouslySetInnerHTML={{ __html: html }} />;
+}: {
+  html: string;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cx(styles.markdown, className)}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
 }

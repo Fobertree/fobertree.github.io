@@ -1,24 +1,22 @@
-import Hero from "../src/Components/Hero";
-import ProjectCollapse from "../src/Components/ProjectCollapse";
-import Contact from "../src/Components/Contact";
-import styles from "./Home.module.css";
+import Hero from "./Components/Hero";
+import ProjectCollapse from "./Components/ProjectCollapse";
+import Contact from "./Components/Contact";
+import ContentPanel from "./Components/ContentPanel";
 
-const Home = () => {
-  return (
-    <div className={styles.home}>
-      <section id="Home" className={styles.homeSection}>
-        <div className={styles.homeMain}>
-          <Hero />
-          <Contact />
-        </div>
-      </section>
-      <section id="Projects" className={styles.projectsSection}>
-        <div className={styles.projectSection}>
-          <ProjectCollapse />
-        </div>
-      </section>
-    </div>
-  );
-};
+const Home = () => (
+  <>
+    <section id="Home">
+      <ContentPanel offset="home">
+        <Hero />
+        <Contact />
+      </ContentPanel>
+    </section>
+    <section id="Projects">
+      <ContentPanel>
+        <ProjectCollapse />
+      </ContentPanel>
+    </section>
+  </>
+);
 
 export default Home;

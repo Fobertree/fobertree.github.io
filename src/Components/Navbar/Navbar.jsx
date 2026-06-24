@@ -1,104 +1,97 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import { NAV_LINKS } from "../../data/nav";
+import { cx } from "../../lib/cx";
 import styles from "./Navbar.module.css";
 
-const NAV_LINKS = [
-  { href: "/", label: "Home", match: (path) => path === "/" },
-  { href: "/blog", label: "Blog", match: (path) => path.startsWith("/blog") },
-  { href: "/#Projects", label: "Projects", match: () => false },
-  { href: "/#Contact", label: "Contact", match: () => false },
-];
+function NavLinks({ pathname, linkClass, activeClass, onNavigate, tabIndex }) {
+  return NAV_LINKS.map(({ href, label, active }) => (
+    <Link
+      key={href}
+      href={href}
+      className={cx(linkClass, active?.(pathname) && activeClass)}
+      onClick={onNavigate}
+      tabIndex={tabIndex}
+    >
+      {label}
+    </Link>
+  ));
+}
 
-const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
-
-  const toggleMenu = () => setIsMenuOpen((open) => !open);
-  const closeMenu = () => setIsMenuOpen(false);
+  const close = () => setOpen(false);
 
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isMenuOpen]);
+  }, [open]);
 
   useEffect(() => {
-    closeMenu();
+    close();
   }, [pathname]);
 
   return (
     <nav className={styles.navbar}>
       <div className={styles.container}>
         <div className={styles.logo}>
-          <Link href="/" onClick={closeMenu}>
+          <Link href="/" onClick={close}>
             Alexander Liu
           </Link>
         </div>
 
         <div className={styles.links}>
-          {NAV_LINKS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`${styles.link} ${
-                item.match(pathname) ? styles.linkActive : ""
-              }`}
-              onClick={closeMenu}
-            >
-              {item.label}
-            </Link>
-          ))}
+          <NavLinks
+            pathname={pathname}
+            linkClass={styles.link}
+            activeClass={styles.linkActive}
+            onNavigate={close}
+          />
         </div>
 
         <button
           type="button"
-          className={`${styles.hamburger} ${isMenuOpen ? styles.hamburgerOpen : ""}`}
-          onClick={toggleMenu}
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isMenuOpen}
+          className={cx(styles.hamburger, open && styles.hamburgerOpen)}
+          onClick={() => setOpen((value) => !value)}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
           aria-controls="mobile-nav-menu"
         >
-          {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
+          {open ? <CloseIcon /> : <MenuIcon />}
         </button>
       </div>
 
       <button
         type="button"
-        className={`${styles.mobileBackdrop} ${isMenuOpen ? styles.mobileBackdropOpen : ""}`}
-        onClick={closeMenu}
+        className={cx(styles.mobileBackdrop, open && styles.mobileBackdropOpen)}
+        onClick={close}
         aria-label="Close menu"
-        tabIndex={isMenuOpen ? 0 : -1}
+        tabIndex={open ? 0 : -1}
       />
 
       <div
         id="mobile-nav-menu"
-        className={`${styles.mobileMenu} ${isMenuOpen ? styles.mobileMenuOpen : ""}`}
-        aria-hidden={!isMenuOpen}
+        className={cx(styles.mobileMenu, open && styles.mobileMenuOpen)}
+        aria-hidden={!open}
       >
         <div className={styles.mobileMenuInner}>
-          {NAV_LINKS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`${styles.mobileLink} ${
-                item.match(pathname) ? styles.mobileLinkActive : ""
-              }`}
-              onClick={closeMenu}
-              tabIndex={isMenuOpen ? 0 : -1}
-            >
-              {item.label}
-            </Link>
-          ))}
+          <NavLinks
+            pathname={pathname}
+            linkClass={styles.mobileLink}
+            activeClass={styles.mobileLinkActive}
+            onNavigate={close}
+            tabIndex={open ? 0 : -1}
+          />
         </div>
       </div>
     </nav>
   );
-};
-
-export default Navbar;
+}

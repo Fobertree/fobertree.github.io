@@ -1,46 +1,36 @@
 import { LatexSection } from "../../lib/blog";
+import { cx } from "../../lib/cx";
 import MarkdownContent from "./MarkdownContent";
 import styles from "./Blog.module.css";
-
-interface LatexDocumentProps {
-  html?: string;
-  sections?: LatexSection[];
-  title?: string;
-  embedded?: boolean;
-}
 
 export default function LatexDocument({
   html,
   sections,
   title,
   embedded = false,
-}: LatexDocumentProps) {
-  const sectionClass = embedded
-    ? `${styles.latexDocument} ${styles.latexDocumentEmbedded}`
-    : styles.latexDocument;
-
-  const hasSections = sections && sections.length > 0;
-  const hasInline = Boolean(html);
-
-  if (!hasSections && !hasInline) {
-    return null;
-  }
+}: {
+  html?: string;
+  sections?: LatexSection[];
+  title?: string;
+  embedded?: boolean;
+}) {
+  if (!html && !sections?.length) return null;
 
   return (
-    <section className={sectionClass}>
+    <section
+      className={cx(styles.latexDocument, embedded && styles.latexDocumentEmbedded)}
+    >
       {title ? <h2 className={styles.latexTitle}>{title}</h2> : null}
       <div className={styles.latexBody}>
-        {hasInline ? <MarkdownContent html={html!} /> : null}
-        {hasSections
-          ? sections!.map((section) => (
-              <div key={section.source} className={styles.latexSection}>
-                {section.title ? (
-                  <h3 className={styles.latexSectionTitle}>{section.title}</h3>
-                ) : null}
-                <MarkdownContent html={section.html} />
-              </div>
-            ))
-          : null}
+        {html ? <MarkdownContent html={html} /> : null}
+        {sections?.map((section) => (
+          <div key={section.source} className={styles.latexSection}>
+            {section.title ? (
+              <h3 className={styles.latexSectionTitle}>{section.title}</h3>
+            ) : null}
+            <MarkdownContent html={section.html} />
+          </div>
+        ))}
       </div>
     </section>
   );

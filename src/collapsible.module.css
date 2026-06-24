@@ -27,8 +27,7 @@
   font-weight: normal;
   padding: 15px;
   background: var(--color-blog-header);
-  width: 80vw;
-  max-width: 1300px;
+  width: 100%;
   transition: background var(--transition-accordion);
 }
 
@@ -55,8 +54,7 @@
 .accordion .content {
   display: grid;
   grid-template-rows: 0fr;
-  width: 80vw;
-  max-width: 1300px;
+  width: 100%;
   background: var(--color-blog-surface);
   border: 1px solid transparent;
   border-top: 0;

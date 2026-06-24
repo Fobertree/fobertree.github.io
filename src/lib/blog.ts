@@ -10,15 +10,9 @@ import rehypeKatex from "rehype-katex";
 import rehypeStringify from "rehype-stringify";
 
 const BLOGS_DIR = path.join(process.cwd(), "blogs");
-
-export const LATEX_DOC_FENCE = "latex-doc";
-export const LATEX_DOC_DEFAULT_DIR = "latex-doc";
-export const LATEX_DOC_EXTENSIONS = [".md", ".tex", ".latex"] as const;
-
-const LATEX_DOC_REGEX = new RegExp(
-  `\`\`\`${LATEX_DOC_FENCE}(?:\\s+dir="([^"]*)")?(?:\\s+title="([^"]*)")?\\s*\\n([\\s\\S]*?)\`\`\``,
-  "g"
-);
+const LATEX_EXT = new Set([".md", ".tex", ".latex"]);
+const LATEX_DOC_REGEX =
+  /```latex-doc(?:\s+dir="([^"]*)")?(?:\s+title="([^"]*)")?\s*\n([\s\S]*?)```/g;
 
 export interface BlogMetadata {
   title: string;
@@ -51,179 +45,29 @@ export interface BlogPost extends BlogPostSummary {
   notesTitle?: string;
 }
 
-async function markdownToHtml(markdown: string): Promise<string> {
-  const file = await unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkMath)
-    .use(remarkRehype, { allowDangerousHtml: true })
-    .use(rehypeKatex)
-    .use(rehypeStringify, { allowDangerousHtml: true })
-    .process(markdown);
+const md = unified()
+  .use(remarkParse)
+  .use(remarkGfm)
+  .use(remarkMath)
+  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(rehypeKatex)
+  .use(rehypeStringify, { allowDangerousHtml: true });
 
-  return String(file);
+async function markdownToHtml(markdown: string) {
+  return String(await md.process(markdown));
 }
 
-function resolvePostSubdirectory(
-  postSlug: string,
-  relativeDir: string
-): string | null {
-  const postDir = path.join(BLOGS_DIR, postSlug);
-  const resolved = path.resolve(postDir, relativeDir);
-
-  if (!resolved.startsWith(postDir + path.sep) && resolved !== postDir) {
-    return null;
-  }
-
-  if (!fs.existsSync(resolved) || !fs.statSync(resolved).isDirectory()) {
-    return null;
-  }
-
-  return resolved;
-}
-
-function collectLatexFiles(dir: string): string[] {
-  const entries = fs
-    .readdirSync(dir, { withFileTypes: true })
-    .sort((a, b) => a.name.localeCompare(b.name));
-
-  const files: string[] = [];
-
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-
-    if (entry.isDirectory()) {
-      files.push(...collectLatexFiles(fullPath));
-      continue;
-    }
-
-    const extension = path.extname(entry.name).toLowerCase();
-    if (
-      LATEX_DOC_EXTENSIONS.includes(
-        extension as (typeof LATEX_DOC_EXTENSIONS)[number]
-      )
-    ) {
-      files.push(fullPath);
-    }
-  }
-
-  return files;
-}
-
-function titleFromFilename(filePath: string): string {
-  const base = path.basename(filePath);
-  const extension = path.extname(base);
-  return base.slice(0, base.length - extension.length);
-}
-
-async function loadLatexDirectory(
-  postSlug: string,
-  relativeDir: string
-): Promise<LatexSection[]> {
-  const dirPath = resolvePostSubdirectory(postSlug, relativeDir);
-  if (!dirPath) {
-    return [];
-  }
-
-  const files = collectLatexFiles(dirPath);
-  const postDir = path.join(BLOGS_DIR, postSlug);
-  const sections: LatexSection[] = [];
-
-  for (const filePath of files) {
-    const raw = fs.readFileSync(filePath, "utf8");
-    const extension = path.extname(filePath).toLowerCase();
-    let content = raw;
-    let title = titleFromFilename(filePath);
-
-    if (extension === ".md") {
-      const { data, content: markdownContent } = matter(raw);
-      content = markdownContent;
-      if (data.title) {
-        title = String(data.title);
-      }
-    }
-
-    sections.push({
-      title,
-      html: await markdownToHtml(content.trim()),
-      source: path.relative(postDir, filePath),
-    });
-  }
-
-  return sections;
-}
-
-async function parseLatexDocFence(
-  postSlug: string,
-  dirAttr: string | undefined,
-  titleAttr: string | undefined,
-  body: string
-): Promise<ContentBlock> {
-  const inlineBody = body.trim();
-
-  if (inlineBody) {
-    return {
-      type: "latex",
-      title: titleAttr || undefined,
-      html: await markdownToHtml(inlineBody),
-    };
-  }
-
-  const relativeDir = dirAttr || LATEX_DOC_DEFAULT_DIR;
-  const sections = await loadLatexDirectory(postSlug, relativeDir);
-
-  return {
-    type: "latex",
-    title: titleAttr || undefined,
-    sections,
-  };
-}
-
-async function parseMarkdownWithEmbeds(
-  postSlug: string,
-  markdown: string
-): Promise<ContentBlock[]> {
-  const blocks: ContentBlock[] = [];
-  let lastIndex = 0;
-  let match: RegExpExecArray | null;
-
-  const regex = new RegExp(LATEX_DOC_REGEX.source, "g");
-
-  while ((match = regex.exec(markdown)) !== null) {
-    if (match.index > lastIndex) {
-      const segment = markdown.slice(lastIndex, match.index).trim();
-      if (segment) {
-        blocks.push({ type: "markdown", html: await markdownToHtml(segment) });
-      }
-    }
-
-    blocks.push(
-      await parseLatexDocFence(postSlug, match[1], match[2], match[3])
-    );
-
-    lastIndex = match.index + match[0].length;
-  }
-
-  const remainder = markdown.slice(lastIndex).trim();
-  if (remainder) {
-    blocks.push({ type: "markdown", html: await markdownToHtml(remainder) });
-  }
-
-  if (blocks.length === 0) {
-    blocks.push({ type: "markdown", html: await markdownToHtml(markdown) });
-  }
-
-  return blocks;
+async function pushMarkdown(blocks: ContentBlock[], markdown: string) {
+  const trimmed = markdown.trim();
+  if (trimmed) blocks.push({ type: "markdown", html: await markdownToHtml(trimmed) });
 }
 
 function parseMetadata(data: Record<string, unknown>): BlogMetadata {
   const dateCreated = String(data.dateCreated ?? data.date ?? "");
-  const dateUpdated = String(data.dateUpdated ?? dateCreated);
-
   return {
     title: String(data.title ?? "Untitled"),
     dateCreated,
-    dateUpdated,
+    dateUpdated: String(data.dateUpdated ?? dateCreated),
     tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
     excerpt: data.excerpt ? String(data.excerpt) : undefined,
   };
@@ -231,24 +75,73 @@ function parseMetadata(data: Record<string, unknown>): BlogMetadata {
 
 function readPostFile(slug: string) {
   const postPath = path.join(BLOGS_DIR, slug, "post.md");
-  if (!fs.existsSync(postPath)) {
-    return null;
-  }
-
-  const raw = fs.readFileSync(postPath, "utf8");
-  const { data, content } = matter(raw);
-
-  return {
-    metadata: parseMetadata(data),
-    content,
-  };
+  if (!fs.existsSync(postPath)) return null;
+  const { data, content } = matter(fs.readFileSync(postPath, "utf8"));
+  return { metadata: parseMetadata(data), content };
 }
 
-export function getAllPostSlugs(): string[] {
-  if (!fs.existsSync(BLOGS_DIR)) {
+function collectLatexFiles(dir: string): string[] {
+  return fs
+    .readdirSync(dir, { withFileTypes: true })
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .flatMap((entry) => {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) return collectLatexFiles(fullPath);
+      return LATEX_EXT.has(path.extname(entry.name).toLowerCase()) ? [fullPath] : [];
+    });
+}
+
+async function loadLatexDirectory(postSlug: string, relativeDir: string) {
+  const postDir = path.join(BLOGS_DIR, postSlug);
+  const dirPath = path.resolve(postDir, relativeDir);
+  if (!dirPath.startsWith(postDir + path.sep) || !fs.existsSync(dirPath) || !fs.statSync(dirPath).isDirectory()) {
     return [];
   }
 
+  return Promise.all(
+    collectLatexFiles(dirPath).map(async (filePath) => {
+      const raw = fs.readFileSync(filePath, "utf8");
+      const isMd = path.extname(filePath).toLowerCase() === ".md";
+      const parsed = isMd ? matter(raw) : { data: {} as Record<string, unknown>, content: raw };
+      const base = path.basename(filePath, path.extname(filePath));
+      return {
+        title: parsed.data.title ? String(parsed.data.title) : base,
+        html: await markdownToHtml(parsed.content.trim()),
+        source: path.relative(postDir, filePath),
+      };
+    })
+  );
+}
+
+async function parseLatexDocFence(postSlug: string, dir?: string, title?: string, body = "") {
+  const inline = body.trim();
+  if (inline) return { type: "latex" as const, title, html: await markdownToHtml(inline) };
+  return {
+    type: "latex" as const,
+    title,
+    sections: await loadLatexDirectory(postSlug, dir || "latex-doc"),
+  };
+}
+
+async function parseMarkdownWithEmbeds(postSlug: string, markdown: string) {
+  const blocks: ContentBlock[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  const regex = new RegExp(LATEX_DOC_REGEX.source, "g");
+
+  while ((match = regex.exec(markdown)) !== null) {
+    await pushMarkdown(blocks, markdown.slice(lastIndex, match.index));
+    blocks.push(await parseLatexDocFence(postSlug, match[1], match[2], match[3]));
+    lastIndex = match.index + match[0].length;
+  }
+
+  await pushMarkdown(blocks, markdown.slice(lastIndex));
+  if (!blocks.length) await pushMarkdown(blocks, markdown);
+  return blocks;
+}
+
+export function getAllPostSlugs() {
+  if (!fs.existsSync(BLOGS_DIR)) return [];
   return fs
     .readdirSync(BLOGS_DIR, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
@@ -259,51 +152,29 @@ export function getAllPostsMetadata(): BlogPostSummary[] {
   return getAllPostSlugs()
     .map((slug) => {
       const post = readPostFile(slug);
-      if (!post) {
-        return null;
-      }
-
-      return {
-        slug,
-        ...post.metadata,
-      };
+      return post ? { slug, ...post.metadata } : null;
     })
     .filter((post): post is BlogPostSummary => post !== null)
-    .sort(
-      (a, b) =>
-        new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime()
-    );
+    .sort((a, b) => +new Date(b.dateCreated) - +new Date(a.dateCreated));
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   const post = readPostFile(slug);
-  if (!post) {
-    return null;
-  }
-
-  const contentBlocks = await parseMarkdownWithEmbeds(slug, post.content);
+  if (!post) return null;
 
   const notesPath = path.join(BLOGS_DIR, slug, "notes.md");
-  let notesHtml: string | undefined;
-  let notesTitle: string | undefined;
-
-  if (fs.existsSync(notesPath)) {
-    const notesRaw = fs.readFileSync(notesPath, "utf8");
-    const { data: notesData, content: notesContent } = matter(notesRaw);
-    notesHtml = await markdownToHtml(notesContent);
-    notesTitle = notesData.title ? String(notesData.title) : undefined;
-  }
+  const notes = fs.existsSync(notesPath) ? matter(fs.readFileSync(notesPath, "utf8")) : null;
 
   return {
     slug,
     ...post.metadata,
-    contentBlocks,
-    notesHtml,
-    notesTitle,
+    contentBlocks: await parseMarkdownWithEmbeds(slug, post.content),
+    notesHtml: notes ? await markdownToHtml(notes.content) : undefined,
+    notesTitle: notes?.data.title ? String(notes.data.title) : undefined,
   };
 }
 
-export function formatBlogDate(date: string): string {
+export function formatBlogDate(date: string) {
   return new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",

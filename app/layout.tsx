@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "../src/Components/Navbar/Navbar";
+import "katex/dist/katex.min.css";
 import "./theme.css";
 import "./globals.css";
 import styles from "./SiteShell.module.css";
