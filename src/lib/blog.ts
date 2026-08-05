@@ -13,6 +13,8 @@ const BLOGS_DIR = path.join(process.cwd(), "blogs");
 const LATEX_EXT = new Set([".md", ".tex", ".latex"]);
 const LATEX_DOC_REGEX =
   /```latex-doc(?:\s+dir="([^"]*)")?(?:\s+title="([^"]*)")?\s*\n([\s\S]*?)```/g;
+const INPUT_REGEX = /\\input\{([^}]+)\}/g;
+const DEFAULT_LATEX_DIR = "latex-doc";
 
 export interface BlogMetadata {
   title: string;
@@ -80,6 +82,15 @@ function readPostFile(slug: string) {
   return { metadata: parseMetadata(data), content };
 }
 
+function getPostDir(postSlug: string) {
+  return path.join(BLOGS_DIR, postSlug);
+}
+
+function isInsidePostDir(postDir: string, resolvedPath: string) {
+  const root = postDir.endsWith(path.sep) ? postDir : postDir + path.sep;
+  return resolvedPath === postDir || resolvedPath.startsWith(root);
+}
+
 function collectLatexFiles(dir: string): string[] {
   return fs
     .readdirSync(dir, { withFileTypes: true })
@@ -91,37 +102,97 @@ function collectLatexFiles(dir: string): string[] {
     });
 }
 
+function parseInputPaths(body: string): string[] {
+  const paths: string[] = [];
+  const regex = new RegExp(INPUT_REGEX.source, "g");
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(body)) !== null) {
+    const inputPath = match[1].trim().replace(/^["']|["']$/g, "");
+    if (inputPath) paths.push(inputPath);
+  }
+  return paths;
+}
+
+/** Resolve an \input path: bare names use includeRoot; paths with separators are post-relative. */
+function resolveLatexInputPath(postDir: string, includeRoot: string, inputPath: string) {
+  const normalized = inputPath.replace(/\\/g, "/");
+  const relative = normalized.includes("/")
+    ? normalized
+    : path.posix.join(includeRoot.replace(/\\/g, "/"), normalized);
+  const resolved = path.resolve(postDir, relative);
+
+  if (!isInsidePostDir(postDir, resolved)) {
+    throw new Error(`latex-doc \\input escapes post directory: ${inputPath}`);
+  }
+  if (!LATEX_EXT.has(path.extname(resolved).toLowerCase())) {
+    throw new Error(
+      `latex-doc \\input must be .md, .tex, or .latex: ${inputPath}`
+    );
+  }
+  if (!fs.existsSync(resolved) || !fs.statSync(resolved).isFile()) {
+    throw new Error(`latex-doc \\input not found: ${inputPath} (resolved ${path.relative(postDir, resolved)})`);
+  }
+  return resolved;
+}
+
+async function loadLatexFile(postDir: string, filePath: string): Promise<LatexSection> {
+  const raw = fs.readFileSync(filePath, "utf8");
+  const isMd = path.extname(filePath).toLowerCase() === ".md";
+  const parsed = isMd
+    ? parseFrontmatter(raw)
+    : { data: {} as Record<string, unknown>, content: raw };
+  const base = path.basename(filePath, path.extname(filePath));
+  return {
+    title: parsed.data.title ? String(parsed.data.title) : base,
+    html: await markdownToHtml(parsed.content.trim()),
+    source: path.relative(postDir, filePath),
+  };
+}
+
 async function loadLatexDirectory(postSlug: string, relativeDir: string) {
-  const postDir = path.join(BLOGS_DIR, postSlug);
+  const postDir = getPostDir(postSlug);
   const dirPath = path.resolve(postDir, relativeDir);
-  if (!dirPath.startsWith(postDir + path.sep) || !fs.existsSync(dirPath) || !fs.statSync(dirPath).isDirectory()) {
+  if (!isInsidePostDir(postDir, dirPath) || !fs.existsSync(dirPath) || !fs.statSync(dirPath).isDirectory()) {
     return [];
   }
 
+  return Promise.all(collectLatexFiles(dirPath).map((filePath) => loadLatexFile(postDir, filePath)));
+}
+
+async function loadLatexInputs(postSlug: string, includeRoot: string, inputPaths: string[]) {
+  const postDir = getPostDir(postSlug);
   return Promise.all(
-    collectLatexFiles(dirPath).map(async (filePath) => {
-      const raw = fs.readFileSync(filePath, "utf8");
-      const isMd = path.extname(filePath).toLowerCase() === ".md";
-      const parsed = isMd
-        ? parseFrontmatter(raw)
-        : { data: {} as Record<string, unknown>, content: raw };
-      const base = path.basename(filePath, path.extname(filePath));
-      return {
-        title: parsed.data.title ? String(parsed.data.title) : base,
-        html: await markdownToHtml(parsed.content.trim()),
-        source: path.relative(postDir, filePath),
-      };
-    })
+    inputPaths.map((inputPath) =>
+      loadLatexFile(postDir, resolveLatexInputPath(postDir, includeRoot, inputPath))
+    )
   );
 }
 
+/**
+ * latex-doc fence behavior:
+ * 1. Body contains \input{...} → load those files in order (bare names under dir, default latex-doc/)
+ * 2. Body non-empty without \input → treat as inline Markdown/KaTeX
+ * 3. Empty body → load entire dir (default latex-doc/)
+ */
 async function parseLatexDocFence(postSlug: string, dir?: string, title?: string, body = "") {
+  const includeRoot = dir || DEFAULT_LATEX_DIR;
   const inline = body.trim();
+  const inputs = parseInputPaths(body);
+
+  if (inputs.length > 0) {
+    return {
+      type: "latex" as const,
+      title,
+      sections: await loadLatexInputs(postSlug, includeRoot, inputs),
+    };
+  }
+
   if (inline) return { type: "latex" as const, title, html: await markdownToHtml(inline) };
+
   return {
     type: "latex" as const,
     title,
-    sections: await loadLatexDirectory(postSlug, dir || "latex-doc"),
+    sections: await loadLatexDirectory(postSlug, includeRoot),
   };
 }
 

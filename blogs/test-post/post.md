@@ -12,6 +12,8 @@ This is a placeholder blog post.
 It supports **markdown**, lists, and inline math like $E = mc^2$.
 
 ```latex-doc title="Math Notes"
+\input{energy.tex}
+\input{integral.md}
 ```
 
 Inline content still works inside the fence body:
