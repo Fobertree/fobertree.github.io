@@ -21,6 +21,7 @@ export default function BlogPostMeta({
     dateUpdated !== dateCreated ? formatBlogDate(dateUpdated) : null;
   const datesClass =
     variant === "article" ? styles.articleDates : styles.postCardDates;
+  const visibleTags = tags.filter((tag) => tag.toLowerCase() !== "hidden");
 
   return (
     <div
@@ -38,9 +39,9 @@ export default function BlogPostMeta({
           </time>
         ) : null}
       </div>
-      {tags.length > 0 ? (
+      {visibleTags.length > 0 ? (
         <div className={styles.tagList}>
-          {tags.map((tag) => (
+          {visibleTags.map((tag) => (
             <span key={tag} className={styles.tag}>
               {tag}
             </span>

@@ -21,6 +21,8 @@ export interface BlogMetadata {
   dateCreated: string;
   dateUpdated: string;
   tags: string[];
+  /** True when frontmatter has `hidden: true` or a `hidden` tag. */
+  hidden: boolean;
   excerpt?: string;
 }
 
@@ -64,13 +66,42 @@ async function pushMarkdown(blocks: ContentBlock[], markdown: string) {
   if (trimmed) blocks.push({ type: "markdown", html: await markdownToHtml(trimmed) });
 }
 
+/** Normalize tags from list, scalar, comma-separated, or flow-style `[a, b]`. */
+function normalizeTags(value: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value.map(String).map((tag) => tag.trim()).filter(Boolean);
+  }
+  if (value == null || value === "") return [];
+
+  let raw = String(value).trim();
+  if (raw.startsWith("[") && raw.endsWith("]")) {
+    raw = raw.slice(1, -1);
+  }
+
+  return raw
+    .split(/[,]+/)
+    .map((tag) => tag.trim().replace(/^["']|["']$/g, ""))
+    .filter(Boolean);
+}
+
+function isTruthyFlag(value: unknown) {
+  if (value === true || value === 1) return true;
+  if (typeof value === "string") {
+    const v = value.trim().toLowerCase();
+    return v === "true" || v === "yes" || v === "1";
+  }
+  return false;
+}
+
 function parseMetadata(data: Record<string, unknown>): BlogMetadata {
   const dateCreated = String(data.dateCreated ?? data.date ?? "");
+  const tags = normalizeTags(data.tags);
   return {
     title: String(data.title ?? "Untitled"),
     dateCreated,
     dateUpdated: String(data.dateUpdated ?? dateCreated),
-    tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
+    tags,
+    hidden: isTruthyFlag(data.hidden) || tags.some((tag) => tag.toLowerCase() === "hidden"),
     excerpt: data.excerpt ? String(data.excerpt) : undefined,
   };
 }
@@ -213,7 +244,12 @@ async function parseMarkdownWithEmbeds(postSlug: string, markdown: string) {
   return blocks;
 }
 
-export function getAllPostSlugs() {
+/** Hidden posts are omitted from the index and return 404 by slug. */
+export function isPostHidden(post: Pick<BlogMetadata, "hidden" | "tags">) {
+  return Boolean(post.hidden) || post.tags.some((tag) => tag.toLowerCase() === "hidden");
+}
+
+function listPostDirectories() {
   if (!fs.existsSync(BLOGS_DIR)) return [];
   return fs
     .readdirSync(BLOGS_DIR, { withFileTypes: true })
@@ -222,18 +258,22 @@ export function getAllPostSlugs() {
 }
 
 export function getAllPostsMetadata(): BlogPostSummary[] {
-  return getAllPostSlugs()
+  return listPostDirectories()
     .map((slug) => {
       const post = readPostFile(slug);
       return post ? { slug, ...post.metadata } : null;
     })
-    .filter((post): post is BlogPostSummary => post !== null)
+    .filter((post): post is BlogPostSummary => post !== null && !isPostHidden(post))
     .sort((a, b) => +new Date(b.dateCreated) - +new Date(a.dateCreated));
+}
+
+export function getAllPostSlugs() {
+  return getAllPostsMetadata().map((post) => post.slug);
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   const post = readPostFile(slug);
-  if (!post) return null;
+  if (!post || isPostHidden(post.metadata)) return null;
 
   const notesPath = path.join(BLOGS_DIR, slug, "notes.md");
   const notes = fs.existsSync(notesPath)

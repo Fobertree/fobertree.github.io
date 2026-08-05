@@ -4,6 +4,7 @@ dateCreated: 2026-06-23
 dateUpdated: 2026-06-23
 tags:
   - test
+  - hidden
 excerpt: Placeholder post to verify the blog pipeline.
 ---
 
