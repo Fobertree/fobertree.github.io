@@ -1,5 +1,0 @@
-:HL["/_next/static/chunks/3u0s3dmdufeek.css","style"]
-:HC["/",""]
-:HL["/_next/static/chunks/0olonnw-hnatr.css","style"]
-:HL["/_next/static/chunks/37d7jasj2yuf_.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"blog","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"test-post","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"irH7jVclZpRxEOfult15J"}
