@@ -6,11 +6,19 @@ import ContentPanel from "../../../src/Components/ContentPanel";
 import LatexDocument from "../../../src/Components/Blog/LatexDocument";
 import { getAllPostSlugs, getPostBySlug } from "../../../src/lib/blog";
 import styles from "../../../src/Components/Blog/Blog.module.css";
+import NotFound from "../../not-found";
 
 type BlogPostPageProps = { params: Promise<{ slug: string }> };
 
-export async function generateStaticParams() {
-  return getAllPostSlugs().map((slug) => ({ slug }));
+// Static export rejects a dynamic route that prerenders zero paths, and
+// reports that as a missing generateStaticParams(). Hidden posts are
+// omitted from the public list, so keep one inert path when none are public.
+const STATIC_EXPORT_FALLBACK_SLUG = "__empty";
+
+export function generateStaticParams() {
+  const slugs = getAllPostSlugs();
+  const paths = slugs.length > 0 ? slugs : [STATIC_EXPORT_FALLBACK_SLUG];
+  return paths.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps) {
@@ -26,7 +34,12 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
-  if (!post) notFound();
+  // notFound() during export writes an empty error document for this
+  // required placeholder, so render the 404 page directly.
+  if (!post) {
+    if (slug === STATIC_EXPORT_FALLBACK_SLUG) return <NotFound />;
+    notFound();
+  }
 
   return (
     <main className={styles.blogPage}>
