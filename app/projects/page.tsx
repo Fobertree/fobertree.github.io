@@ -3,7 +3,7 @@ import ContentPanel from "../../src/Components/ContentPanel";
 
 export const metadata = {
   title: "Projects | Alexander Liu",
-  description: "Work experience and projects.",
+  description: "Work experience.",
 };
 
 export default function ProjectsPage() {

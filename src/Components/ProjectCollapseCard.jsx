@@ -17,18 +17,20 @@ export default function ProjectCollapseCard({
       </h2>
       <div className={styles.content}>
         <div className={styles.contentInner}>
-          <div>
-            <strong>Description:</strong>{" "}
-            {bullets ? (
-              <ul>
-                {bullets.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            ) : (
-              description
-            )}
-          </div>
+          {bullets?.length || description ? (
+            <div>
+              <strong>Description:</strong>{" "}
+              {bullets?.length ? (
+                <ul>
+                  {bullets.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              ) : (
+                description
+              )}
+            </div>
+          ) : null}
           <p>
             <strong>Technologies Used:</strong> {tech_stack}
           </p>
